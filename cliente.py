@@ -1,26 +1,29 @@
 import sys
 import logging
+import threading
+import time
 
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 
-from interval import *
 
 
 # Variables
 server_url = "wss://socket-iac.azurewebsites.net/pruebas"
 
+detener = False
 
-def action():
-    hub_connection.send("RecibirMediciones", ['{ "name":"John", "age":30, "city":"New York"}'])
+def worker():
+    arreglo = [1,2,3,4,5]
+    
+    for item in arreglo:
+        time.sleep(0.5)
+        hub_connection.send("RecibirMediciones", ['{ "name":"John", "age":30, "city":"New York"}'])
 
-
+        
 
 def start():
-    inter = setInterval(0.5, action)
-    t = threading.Timer(30, inter.cancel)
+    t = threading.Thread(target=worker)
     t.start()
-
-
 
 
 
